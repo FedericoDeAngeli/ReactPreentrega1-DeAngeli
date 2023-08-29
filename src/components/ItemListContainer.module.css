@@ -3,4 +3,8 @@
     background-color: orange;
     text-align: center;
 
+    .img{
+        opacity: 10%;
+    }
+
 }
