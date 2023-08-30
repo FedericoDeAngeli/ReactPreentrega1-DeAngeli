@@ -8,13 +8,14 @@ return(
         <ul>
             {items.map((item) => (
                 
-                <li key={item.id}>
+                <div className="col-6 col-md-4 col-lg-3" key={item.id}>
                     <Link to={`/item/${item.id}`}>
+                        <img src={item.image} alt="{item.name}" />
                     <h3>{item.name}</h3>
                     <p>${item.precio}</p>
                     </Link>
 
-                </li>
+                </div>
             ))
             }
         </ul>

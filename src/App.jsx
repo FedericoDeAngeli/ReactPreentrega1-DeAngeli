@@ -8,9 +8,7 @@ function App() {
 <div>
   <NavBar />
 
-   <ItemListContainer />
-
-   <Routes>
+    <Routes>
     <Route path="/" element={<ItemListContainer />}></Route>
     <Route path="/category/:categoryId" element={<ItemListContainer />} />
     <Route path="/item/:id" element={<ItemDetailContainer />} />
