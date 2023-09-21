@@ -5,19 +5,23 @@ import { useParams} from "react-router-dom";
 import { obtenerProductos } from "./services";
 
 
+
 const ItemListContainer = () => {
 const [items, setItems] = useState([])
+const [loading, setLoading] = useState([true])
 const {categoryId} = useParams()
 
+
 useEffect(() =>{
-    obtenerProductos(categoryId)
-    .then((response) => {
-        setItems(response)
-    })
+   obtenerProductos(categoryId).then((response)=>{
+    setItems(response);
+    setLoading(false);
+   });
+  
 }, [categoryId])
 
 return(
-<ItemList items={items}/>
+<ItemList items={items} loading={loading}/>
 
 )
 }

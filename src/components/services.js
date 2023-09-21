@@ -1,3 +1,5 @@
+import {doc, addDoc, query, getDoc, where, collection, getDocs, getFirestore} from "firebase/firestore";
+
 const productos = [
     {id:"1",name:"Pimienta Blanca", precio:"100 (los 100g)", categoria:"especias", image:"/img/especias.jpg"},
     {id:"2",name:"Cúrcuma", precio:"250 (los 100g)", categoria:"especias",image:"/img/especias.jpg"},
@@ -15,23 +17,48 @@ const productos = [
 
 export const obtenerProducto = (id) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const producto = productos.find(prod => prod.id === id);
-            if(producto){
-                resolve(producto)
-            }else{
-                reject("Producto no encontrado")
-                
-            }
-        }, 2000)
-    })
-}
+           const db = getFirestore();
+           const itemDoc = doc(db, "items", id);
 
-export const obtenerProductos = (category)=>{
-    return new Promise((resolve)=>{
-        setTimeout(()=>{
-          const productosfiltrados = category ? productos.filter((product) => product.categoria === category): productos; 
-        resolve(productosfiltrados)
-        }, 2000)
+           getDoc(itemDoc).then((doc) => {
+            if(doc.exists()){
+                resolve({id: doc.id, ...doc.data()});
+            } else {
+                resolve(null)
+            }
+           }).catch((error) => {
+            reject(error)
+           })
+            })
+        }
+
+export const obtenerProductos = ((categoryId)=>{
+    return new Promise((resolve, reject)=>{
+       const db = getFirestore();
+       const itemCollection = collection(db, "items")
+
+        let q
+        if(categoryId) {
+            q = query(itemCollection, where("categoryId", "==", categoryId))
+        }else{
+            q = query(itemCollection)
+        }
+
+        getDocs(q).then((querySnapshot) =>{
+            const productos = querySnapshot.docs.map((doc) =>{
+                return {id: doc.id, ...doc.data()};
+            })
+            resolve(productos)
+        }).catch((error) =>{
+        reject(error);})
+        }, )
     })
-}
+
+
+    export const crearOrden = (orden) =>{
+        const db = getFirestore()
+        const ordenes = collection(db, "orders")
+
+        return addDoc(ordenes, orden)
+
+    }
