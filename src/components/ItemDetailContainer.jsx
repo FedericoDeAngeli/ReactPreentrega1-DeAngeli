@@ -14,6 +14,7 @@ const ItemDetailContainer = () => {
     const {id} = useParams();
     const {addItem} = useContext(CartContext);
 
+
     useEffect(()=>{
       obtenerProducto(id).then((response) =>{
         setItem(response);
@@ -24,11 +25,13 @@ const ItemDetailContainer = () => {
       })
         
     }, [id]);
+  
     
-return  <ItemDetail item={item} loading = {loading} addItem={addItem}/>
-
-
-
+return ( <ItemDetail item={item} loading = {loading} addItem={addItem}/>
+)
 }
+
+
+
 
 export default ItemDetailContainer

@@ -34,7 +34,7 @@ const {name, value} = event.target;
 const handleCheckout = () =>{
     const order = {
         buyer: {
-            name: formData.nombe,
+            name: formData.name,
             email: formData.email,
             phone: formData.phone,
         },
@@ -55,7 +55,12 @@ const handleCheckout = () =>{
     return (
        <div>
         <h2>Checkout</h2>
-        <h3>Datos del comprador</h3>
+       
+        {orderId && <h3>Órden nro: {orderId}</h3>}
+        {!orderId && (
+
+            <>
+             <h3>Datos del comprador</h3>
         <form action="">
             <div>
             <label htmlFor="name">Nombre: </label>
@@ -74,10 +79,6 @@ const handleCheckout = () =>{
             </div>
 </form>
 
-        {orderId && <h3>Órden nro: {orderId}</h3>}
-        {!orderId && (
-
-            <>
         <h3>Listado de productos</h3>
         <ul>
         {cart.map((item) =>(
